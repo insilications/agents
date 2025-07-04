@@ -85,6 +85,7 @@ export class Run<T extends t.BaseGraphState> {
     const { llmConfig, tools = [], ...graphInput } = config;
     const { provider, ...clientOptions } = llmConfig;
 
+    // let kk = llmConfig.useRespID;
     const standardGraph = new StandardGraph({
       tools,
       provider,
@@ -191,9 +192,16 @@ export class Run<T extends t.BaseGraphState> {
       provider: this.provider,
     });
 
+    console.log(
+      `[Run/processStream] inputs: ${Bun.inspect(inputs, { depth: 3 })}`
+    );
+    console.log(
+      `[Run/processStream] config: ${Bun.inspect(config, { depth: 3 })}`
+    );
     const stream = this.graphRunnable.streamEvents(inputs, config);
 
     for await (const event of stream) {
+      // console.log('processStream - event: ', event);
       const { data, name, metadata, ...info } = event;
 
       let eventName: t.EventName = info.event;

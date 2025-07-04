@@ -58,7 +58,7 @@ export type AnthropicReasoning = {
   thinking?: ThinkingConfig | boolean;
   thinkingBudget?: number;
 };
-export type OpenAIClientOptions = ChatOpenAIFields;
+export type OpenAIClientOptions = ChatOpenAIFields & { useRespID?: string };
 export type OllamaClientOptions = ChatOllamaInput;
 export type AnthropicClientOptions = AnthropicInput;
 export type MistralAIClientOptions = ChatMistralAIInput;

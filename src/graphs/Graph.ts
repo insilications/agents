@@ -144,6 +144,7 @@ export class StandardGraph extends Graph<t.BaseGraphState, GraphNode> {
   provider: Providers;
   toolEnd: boolean;
   signal?: AbortSignal;
+  // useRespID: string;
 
   constructor({
     runId,
@@ -155,6 +156,7 @@ export class StandardGraph extends Graph<t.BaseGraphState, GraphNode> {
     instructions,
     reasoningKey,
     clientOptions,
+    // useRespID,
     toolEnd = false,
     additional_instructions = '',
   }: t.StandardGraphInput) {
@@ -167,6 +169,7 @@ export class StandardGraph extends Graph<t.BaseGraphState, GraphNode> {
     this.provider = provider;
     this.streamBuffer = streamBuffer;
     this.clientOptions = clientOptions;
+    // this.useRespID = useRespID;
     this.graphState = this.createGraphState();
     this.boundModel = this.initializeModel();
     if (reasoningKey) {
@@ -572,13 +575,17 @@ export class StandardGraph extends Graph<t.BaseGraphState, GraphNode> {
         (this.tools?.length ?? 0) > 0 &&
         manualToolStreamProviders.has(provider)
       ) {
+        console.log('[Run/processStream] await this.boundModel.stream');
         const stream = await this.boundModel.stream(finalMessages, config);
         let finalChunk: AIMessageChunk | undefined;
         for await (const chunk of stream) {
+          console.log('0 createCallModel - Chunk received: ', chunk);
           dispatchCustomEvent(GraphEvents.CHAT_MODEL_STREAM, { chunk }, config);
           if (!finalChunk) {
+            console.log('1 createCallModel - Chunk received: ', chunk);
             finalChunk = chunk;
           } else {
+            console.log('2 createCallModel - Chunk received: ', chunk);
             finalChunk = concat(finalChunk, chunk);
           }
         }
@@ -586,6 +593,7 @@ export class StandardGraph extends Graph<t.BaseGraphState, GraphNode> {
         finalChunk = modifyDeltaProperties(this.provider, finalChunk);
         result = { messages: [finalChunk as AIMessageChunk] };
       } else {
+        console.log('[Run/processStream] await this.boundModel.invoke');
         const finalMessage = (await this.boundModel.invoke(
           finalMessages,
           config

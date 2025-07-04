@@ -431,7 +431,7 @@ export function formatArtifactPayload(messages: BaseMessage[]): void {
       currentContent = [
         {
           type: 'text',
-          text: msg.content,
+          text: currentContent,
         },
       ];
     }

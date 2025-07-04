@@ -1,0 +1,39 @@
+{
+  "files": [
+    {
+      "path": "src/llm/openai/utils/index.ts",
+      "bookmarks": [
+        {
+          "line": 748,
+          "column": 6,
+          "label": ""
+        }
+      ]
+    },
+    {
+      "path": "src/messages/format.ts",
+      "bookmarks": [
+        {
+          "line": 364,
+          "column": 18,
+          "label": ""
+        }
+      ]
+    },
+    {
+      "path": "src/run.ts",
+      "bookmarks": [
+        {
+          "line": 70,
+          "column": 52,
+          "label": ""
+        },
+        {
+          "line": 200,
+          "column": 42,
+          "label": ""
+        }
+      ]
+    }
+  ]
+}

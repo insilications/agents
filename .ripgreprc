@@ -1,0 +1,3 @@
+--glob=!src/specs/*
+--glob=!src/proto/*
+--glob=!src/scripts/*

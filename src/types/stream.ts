@@ -5,6 +5,7 @@ import type {
   MessageContentText,
   ToolMessage,
   BaseMessage,
+  DataContentBlock,
 } from '@langchain/core/messages';
 import type { ToolCall, ToolCallChunk } from '@langchain/core/messages/tool';
 import type { LLMResult, Generation } from '@langchain/core/outputs';
@@ -278,7 +279,7 @@ export type BedrockReasoningContentText = {
  */
 export type ToolCallPart = {
   /** Type ("tool_call") according to Assistants Tool Call Structure */
-  type: ContentTypes.TOOL_CALL;
+  type: 'tool_call' | ContentTypes.TOOL_CALL;
   /** The name of the tool to be called */
   name: string;
   /** The arguments to the tool call */
@@ -296,7 +297,7 @@ export type ToolCallPart = {
 };
 
 export type ToolCallContent = {
-  type: ContentTypes.TOOL_CALL;
+  type: 'tool_call' | ContentTypes.TOOL_CALL;
   tool_call?: ToolCallPart;
 };
 
@@ -312,25 +313,52 @@ export type ToolResultContent = {
   index?: number;
 };
 
+export type MessageContentResponseMetadata = {
+  type: ContentTypes.RESPONSE_METADATA;
+  id: string;
+  created_at: number;
+};
+
+export type MessageContentError = {
+  type: ContentTypes.ERROR;
+  error: string;
+};
+
+type _MessageContentText = Omit<MessageContentText, 'type'> & {
+  type: 'text' | ContentTypes.TEXT;
+};
+type _MessageContentImageUrl = Omit<MessageContentImageUrl, 'type'> & {
+  type: 'image_url' | ContentTypes.IMAGE_URL;
+};
+
+// Maybe should be renamed to `LcMessageContentComplex` or similar to avoid confusion with LangChains's `MessageContentComplex`
 export type MessageContentComplex = (
   | ToolResultContent
   | ThinkingContentText
   | AgentUpdate
   | ToolCallContent
   | ReasoningContentText
-  | MessageContentText
-  | MessageContentImageUrl
+  | _MessageContentText
+  | _MessageContentImageUrl
+  | MessageContentResponseMetadata
+  | DataContentBlock
+  | MessageContentError
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  | (Record<string, any> & {
-      type?: 'text' | 'image_url' | 'think' | 'thinking' | string;
-    })
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  | (Record<string, any> & {
-      type?: never;
-    })
-) & {
-  tool_call_ids?: string[];
-};
+  | (Record<string, any> & { type?: string })
+) & { tool_call_ids?: string[] };
+// | (Record<string, any> & { type?: 'text' | 'image_url' | string })
+
+// export type MessageContentComplex = (
+//   | ThinkingContentText
+//   | AgentUpdate
+//   | ToolCallContent
+//   | ReasoningContentText
+//   | _MessageContentText
+//   | _MessageContentImageUrl
+//   | MessageContentResponseMetadata
+//   | DataContentBlock
+//   | MessageContentError
+// ) & { tool_call_ids?: string[] };
 
 export interface TMessage {
   role?: string;

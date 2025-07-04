@@ -317,7 +317,7 @@ function formatAssistantMessage(
           new ToolMessage({
             tool_call_id: tool_call.id ?? '',
             name: tool_call.name,
-            content: output || '',
+            content: output ?? '',
           })
         );
       } else if (part.type === ContentTypes.THINK) {
@@ -420,7 +420,7 @@ export const formatAgentMessages = (
               hasInvalidTool = true;
               break;
             }
-            const toolName = part.tool_call.name;
+            const toolName = part.tool_call?.name ?? '';
             toolNames.push(toolName);
             if (!tools.has(toolName)) {
               hasInvalidTool = true;

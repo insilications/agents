@@ -3,7 +3,7 @@ import type { StructuredToolInterface } from '@langchain/core/tools';
 import type { RunnableToolLike } from '@langchain/core/runnables';
 import type { ToolCall } from '@langchain/core/messages/tool';
 import type { ToolErrorData } from './stream';
-import { EnvVar } from '@/common';
+import { EnvVar, ContentTypes } from '@/common';
 
 /** Replacement type for `import type { ToolCall } from '@langchain/core/messages/tool'` in order to have stringified args typed */
 export type CustomToolCall = {
@@ -11,7 +11,7 @@ export type CustomToolCall = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   args: string | Record<string, any>;
   id?: string;
-  type?: 'tool_call';
+  type?: 'tool_call' | ContentTypes.TOOL_CALL;
   output?: string;
 };
 

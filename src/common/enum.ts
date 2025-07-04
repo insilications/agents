@@ -123,6 +123,7 @@ export enum ContentTypes {
   AGENT_UPDATE = 'agent_update',
   /** Bedrock */
   REASONING_CONTENT = 'reasoning_content',
+  RESPONSE_METADATA = 'response_metadata',
 }
 
 export enum ToolCallTypes {

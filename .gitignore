@@ -12,3 +12,5 @@ dist/
 google_auth.json
 credentials/**/*
 .cursor/
+
+.rollup.cache/

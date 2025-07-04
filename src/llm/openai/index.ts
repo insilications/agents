@@ -22,6 +22,7 @@ import {
   _convertOpenAIResponsesDeltaToBaseMessageChunk,
   type ResponseReturnStreamEvents,
 } from './utils';
+import { stringify } from 'flatted';
 
 // TODO import from SDK when available
 type OpenAIRoleEnum =
@@ -242,16 +243,34 @@ export class ChatOpenAI extends OriginalChatOpenAI<t.ChatOpenAICallOptions> {
     runManager?: CallbackManagerForLLMRun
   ): AsyncGenerator<ChatGenerationChunk> {
     if (!this._useResponseApi(options)) {
+      console.log(
+        `[ChatOpenAI/_streamResponseChunks] 0 messages: ${stringify(messages)}`
+      );
+      console.log(
+        `[ChatOpenAI/_streamResponseChunks] 0 options: ${stringify(options)}`
+      );
       return yield* this._streamResponseChunks2(messages, options, runManager);
     }
+
+    console.log(
+      `[ChatOpenAI/_streamResponseChunks] 1 messages: ${stringify(messages)}`
+    );
+    console.log(
+      `[ChatOpenAI/_streamResponseChunks] 1 options: ${stringify(options)}`
+    );
+    const input_converted = _convertMessagesToOpenAIResponsesParams(
+      messages,
+      this.model,
+      this.zdrEnabled
+    );
+    console.log(
+      `[ChatOpenAI/_streamResponseChunks] 1 input_converted: ${stringify(input_converted)}`
+    );
+
     const streamIterable = await this.responseApiWithRetry(
       {
         ...this.invocationParams<'responses'>(options, { streaming: true }),
-        input: _convertMessagesToOpenAIResponsesParams(
-          messages,
-          this.model,
-          this.zdrEnabled
-        ),
+        input: input_converted,
         stream: true,
       },
       options
