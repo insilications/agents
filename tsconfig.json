@@ -1,18 +1,15 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "esModuleInterop": true,
     "moduleResolution": "bundler",
     "module": "ESNext",
     "target": "ESNext",
-    "skipLibCheck": true,
-    "strict": true,
-    "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true,
-    "sourceMap": true,
+    "declarationDir": "./dist/types",
+    "noEmit": false,  // Allow emission of .d.ts
     "rootDir": "./src",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     }
   },
   "ts-node": {
