@@ -6,6 +6,7 @@
     "target": "ESNext",
     "declarationDir": "./dist/types",
     "noEmit": false,  // Allow emission of .d.ts
+    "emitDeclarationOnly": true,
     "rootDir": "./src",
     "baseUrl": ".",
     "paths": {
