@@ -6,7 +6,6 @@ import alias from '@rollup/plugin-alias';
 import commonjs from '@rollup/plugin-commonjs';
 import { cleandir } from 'rollup-plugin-cleandir';
 // import obfuscator from 'rollup-plugin-obfuscator';
-// import typescript from '@rollup/plugin-typescript';
 import resolve from '@rollup/plugin-node-resolve';
 import json from '@rollup/plugin-json';
 import swc from '@rollup/plugin-swc';
@@ -83,51 +82,7 @@ export default {
     swc({
       // Explicitly point to the tsconfig.json file
       tsconfig: './tsconfig.json',
-
-      // // You can still override any options from tsconfig.json here
-      // // For example, to ensure a specific module format for Rollup's tree-shaking
-      // jsc: {
-      //   parser: {
-      //     syntax: 'typescript',
-      //   },
-      //   // Override the 'target' from tsconfig.json if needed
-      //   // target: 'es2020',
-      // },
-      // module: {
-      //   // SWC's module options are separate and important for Rollup
-      //   type: 'es6',
-      // }
     }),
-    // typescript({
-    //   tsconfig: './tsconfig.json',
-    //   /* enable source maps for testing with other production options */
-    //   // sourceMap: !isProduction,
-    //   // inlineSources: !isProduction,
-    //   sourceMap: true,
-    //   inlineSources: true,
-    //   // outDir: null,
-    //   // declaration: false,
-    //   exclude: [
-    //     'src/proto/**/*',
-    //     '**/*.test.ts',
-    //     '**/*.spec.ts',
-    //     'node_modules/**'
-    //   ]
-    // }),
-    /* Disable terser/obfuscator for now */
-    // isProduction && terser(),
-    // isProduction && obfuscator({
-    //   exclude: [
-    //     'node_modules/**',
-    //     '**/*.spec.ts',
-    //     'tsconfig-paths-bootstrap.mjs',
-    //     'src/proto/**',
-    //     'src/scripts/**',
-    //     'dist/**',
-    //     'config/**',
-    //     'routes/**'
-    //   ]
-    // })
   ].filter(Boolean),
   external: [
     /node_modules/

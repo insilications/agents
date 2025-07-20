@@ -8,7 +8,7 @@
     "declarationDir": "./dist/types",
     "noEmit": false,
     "emitDeclarationOnly": true,
-    // "rootDir": "./src",
+    "rootDir": "./src",
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
@@ -29,36 +29,3 @@
     "routes"
   ]
 }
-
-// {
-//   "compilerOptions": {
-//     "esModuleInterop": true,
-//     "moduleResolution": "bundler",
-//     "module": "ESNext",
-//     "target": "ESNext",
-//     "skipLibCheck": true,
-//     "strict": true,
-//     "allowSyntheticDefaultImports": true,
-//     "resolveJsonModule": true,
-//     "sourceMap": true,
-//     "rootDir": "./src",
-//     "baseUrl": ".",
-//     "paths": {
-//       "@/*": ["src/*"]
-//     }
-//   },
-//   "ts-node": {
-//     "transpileOnly": true,
-//     "swc": true
-//   },
-//   "include": ["src/**/*", "scripts/**/*"],
-//   "exclude": [
-//     "node_modules",
-//     "**/*.spec.ts",
-//     "tsconfig-paths-bootstrap.mjs",
-//     "src/proto/**/*",
-//     "dist",
-//     "config",
-//     "routes"
-//   ]
-// }
